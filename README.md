@@ -1,15 +1,15 @@
 ---
 title: Sofar HYD6000-ES ModbusRead
-author: Andy Whittaker
-tags: 'Modbus, Node-RED, Emon, RS485, Sofar Inverter, Hybrid, HYD6000-ES'
+author: Andy Whittaker, Matt Morgan
+tags: 'Modbus, Emon, RS485, Sofar Inverter, Hybrid, HYD6000-ES'
 categories: Solar PV
-date: '2020-05-28'
+date: '2021-05-11'
 
 ---
 <h1 id="sofar-hyd6000-es-modbusread">Sofar HYD6000-ES ModbusRead
 </h1>This is a very badly written Python Script to Request and Read Data from the HYD6000 Inverter RS485 Port and Write To EmonCMS (or EmonPi).
 
-Since we require the script to be called at regular intervals, I have also included a very simple Node-RED script to call the Python code (currently) at 30 second intervals.
+Since we require the script to be called at regular intervals, I have also included a very simple CRONTAB command and run script to call the Python code (currently) at 5 second intervals.
 <h2 id="interfacing-with-the-hyd6000">Interfacing with the HYD6000
 </h2>We require to interface between the Raspberry Pi and the Sofar HYD6000 inverter via RS485. On the bottom of the HYD6000 you can find the interface connections.
 
@@ -47,17 +47,6 @@ For debugging, simply remove the comment lines (#) in front of the print stateme
 <h2 id="executing-the-code">Executing the Code
 </h2>Assuming you can see sofar,py when you type “ls”, then to run it type
 <code data-te-codeblock="">python sofar.py</code>If you get any errors, you are probably missing some python libraries which you will need to install using “pip”. Google is your friend here.
-<h2 id="node-red">Node-RED
-</h2>If your script is working, you need a way of executing it every, say, 30 seconds to log to the emonCMS database to give you pretty graphs to bore your friends with.
+<h2 id="node">Auto Publish Results</h2>If your script is working, you need a way of executing it every, say, 5 seconds to log to the emonCMS database to give you pretty graphs to bore your friends with.
 
-<img src="http://andywhittaker.com/img/nodered.png" alt="Node-RED Timer Script">
-The node-RED setup actually took me the longest to complete. I was looking everywhere to find a solution and downloading libraries and all sorts. In the end it was quite easy.
-
-<br>
-If you would like the above flow, it’s available in the repository under flows.json.
-<h1 id="the-future">The Future
-</h1>Everything we all do is never finished. I would like to get the script to write to my Domoticz server and, in future, instruct the inverter to charge up its batteries during cheap rate electricity.
-
-Oh, did I mention batteries? I have adopted PylonTech US3000 units because they seem to be the best value units on the market (2020). Although this inverter will allow you to charge from your mains supply, this is actually frowned upon (i.e. illegal) here in the UK because every time you discharge the batteries, they are being metered as energy from your SolarPV panels. If you were to charge them from the mains during the night, you will probably be visited by some very angry men who will be in no mood for humour…
-
-An alternative that anyone could do is to use the LuxPower LXP 3600ACS inverter. This is just wired up to your mains supply and is able to charge the batteries when it sees your system trying to export to the grid. By clever voltage monitoring, if export drops, it then discharges the batteries into your home. From what I can see, the Lux LXP 3600ACS is able to be monitored and controlled by ModBus. The only downside is that these inverters are limited to a maximum discharge load of 3600W unless you run them in parallel.
+Add the CRONTAB command from the CRONTAB file, and reboot. 
