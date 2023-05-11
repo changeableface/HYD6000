@@ -1,0 +1,1 @@
+@reboot ~/HYD6000/run.sh >> ~/HYD6000/output.log 2>&1
